@@ -1,4 +1,4 @@
-// SimplePlayer.cpp : Defines the entry point for the console application.
+﻿// SimplePlayer.cpp : Defines the entry point for the console application.
 //
 
 #include "stdafx.h"
@@ -54,12 +54,24 @@ int main() {
 
 	H::Json::Set(json, "BoolVal", true);
 	H::Json::Set(json, "IntVal", 1);
+	H::Json::Set(json, "DblVal", 3.14);
+	H::Json::Set(json, "FltVal", 3.14f);
+	H::Json::Set(json, "StrVal", L"3,14");
+	H::Json::Set(json, "U64Val", UINT64_MAX);
 
 	bool b = false;
 	int i = 0;
+	double d;
+	float f;
+	std::wstring ws;
+	uint64_t u64;
 
 	H::Json::Get(json, "BoolVal", b);
 	H::Json::Get(json, "IntVal", i);
+	H::Json::Get(json, "IntVal", d);
+	H::Json::Get(json, "FltVal", f);
+	H::Json::Get(json, "StrVal", ws);
+	H::Json::Get(json, "U64Val", u64);
 
 	Json::FastWriter writer;
 	std::string res = writer.write(json);

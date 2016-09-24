@@ -25,6 +25,8 @@ namespace H {
 		static ::Json::Value Serialize(float v);
 		static ::Json::Value Serialize(const std::string &str);
 		static ::Json::Value Serialize(const std::wstring &str);
+		static ::Json::Value Serialize(const char *str);
+		static ::Json::Value Serialize(const wchar_t *str);
 		static ::Json::Value Serialize(const D2D1_RECT_F &v);
 		static ::Json::Value Serialize(const DirectX::XMFLOAT3 &v);
 		static ::Json::Value Serialize(const D2D1::ColorF &v);
