@@ -103,6 +103,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Metainfo\PointerGetter.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Metainfo\RawType.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\HJson.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Json\JsonObjectNative.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Json\JsonObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Dx\D2DCtxMt.cpp" />
@@ -154,5 +156,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Thread\ICancellationToken.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\HMathCP.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\HJson.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Json\JsonObjectNative.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Json\JsonObject.cpp" />
   </ItemGroup>
 </Project>

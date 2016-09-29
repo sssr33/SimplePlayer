@@ -83,6 +83,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\ImageUtilsEncodeOptions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\jsonNative\dist\json\json-forwards.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\jsonNative\dist\json\json.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Json\JsonObject.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Json\JsonObjectNative.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Macros.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\MatrixStack.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Metainfo\PointerGetter.h" />
@@ -159,6 +161,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\ImageUtils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\ImageUtilsEncodeOptions.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\jsonNative\dist\jsoncpp.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Json\JsonObject.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Json\JsonObjectNative.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\MatrixStack.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Text\UriCodec.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Thread\ICancellationToken.cpp" />

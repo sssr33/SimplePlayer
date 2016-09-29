@@ -2,92 +2,35 @@
 //
 
 #include "stdafx.h"
+
+#include <memory>
 #include <libhelpers\HJson.h>
+#include <libhelpers\Json\JsonObjectNative.h>
 
 /*
 TODO
-- Json as object(interface + object)
 - exceptions instead of true/false (maybe)
-- 2 versions of get
-- remove unnecessary json fields on elementary types
-- serialize/deserialize as protected or private
-- try subscript operator + accessor insted of get/set methods
 */
 
-struct AAcc {
-	std::string str = "Hello";
-	int i = 123;
-
-	AAcc &operator=(int a) {
-		this->i = a;
-		return *this;
-	}
-
-	AAcc &operator=(const std::string &a) {
-		this->str = a;
-		return *this;
-	}
-
-	operator int() { 
-		return this->i; 
-	}
-
-	operator std::string() {
-		return this->str;
-	}
-};
-
-struct A {
-	AAcc aac;
-
-	AAcc &operator[](const int index) {
-		return this->aac;
-	}
-};
-
-void test(int a, const std::string &s) {
-	int stop = 324;
-}
-
 int main() {
-	Json::Value json;
+	std::unique_ptr<JsonObject> json2 = std::make_unique<JsonObjectNative>();
 
-	H::Json::Set(json, "BoolVal", true);
-	H::Json::Set(json, "IntVal", 1);
-	H::Json::Set(json, "DblVal", 3.14);
-	H::Json::Set(json, "FltVal", 3.14f);
-	H::Json::Set(json, "StrVal", L"3,14");
-	H::Json::Set(json, "U64Val", UINT64_MAX);
+	//(*json2)["s"]["t"]["a"]["l"]["k"]["e"]["r"] = true;
+	//(*json2)["s"]["t"]["a"]["l"]["k"]["e"]["r2"] = true;
+	//(*json2) = true;
 
-	bool b = false;
-	int i = 0;
-	double d;
-	float f;
-	std::wstring ws;
-	uint64_t u64;
+	(*json2)[0][0] = 22;
+	(*json2)[0][1] = 3.14f;
+	(*json2)[1][0] = 4.3;
+	(*json2)[1][1] = "Hello";
 
-	H::Json::Get(json, "BoolVal", b);
-	H::Json::Get(json, "IntVal", i);
-	H::Json::Get(json, "IntVal", d);
-	H::Json::Get(json, "FltVal", f);
-	H::Json::Get(json, "StrVal", ws);
-	H::Json::Get(json, "U64Val", u64);
+	auto bbbb = (int)(*json2)[0][0];
+	auto ffff = (float)(*json2)[0][1];
+	auto dddd = (double)(*json2)[1][0];
+	auto ssss = (std::string)(*json2)[1][1];
 
-	Json::FastWriter writer;
-	std::string res = writer.write(json);
+	auto json2Text = json2->ToString();
 
-	A a;
-
-	a[123] = 23;
-
-	int asd = a[123];
-
-	a[23] = "Hello world";
-
-	std::string s = a[23];
-
-	test(a[123], a[123]);
-
-    return 0;
+	return 0;
 }
 
