@@ -7,6 +7,8 @@
 #include <libhelpers\HJson.h>
 #include <libhelpers\Json\JsonObjectNative.h>
 
+#include "Window/WindowContainer.h"
+
 /*
 TODO
 - exceptions instead of true/false (maybe)
@@ -30,6 +32,16 @@ int main() {
 	auto ssss = (std::string)(*json2)[1][1];
 
 	auto json2Text = json2->ToString();
+
+	/*HWND hWnd = GetConsoleWindow();
+	ShowWindow(hWnd, SW_HIDE);
+
+	while (true)
+	{
+
+	}*/
+
+	WindowContainer<Window> wnd;
 
 	return 0;
 }

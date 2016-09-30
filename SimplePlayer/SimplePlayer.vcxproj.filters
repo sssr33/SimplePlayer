@@ -4,10 +4,15 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Window\Window.h" />
+    <ClInclude Include="Window\WindowContainer.h" />
+    <ClInclude Include="Window\WindowBaseData.h" />
+    <ClInclude Include="Window\WindowMain.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="SimplePlayer.cpp" />
     <ClCompile Include="Window\Window.cpp" />
+    <ClCompile Include="Window\WindowMain.cpp" />
+    <ClCompile Include="Window\WindowBaseData.cpp" />
   </ItemGroup>
 </Project>
