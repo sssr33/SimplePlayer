@@ -160,6 +160,11 @@ LRESULT CALLBACK WindowMain::WndProcTmp(HWND h, UINT msg, WPARAM wparam, LPARAM 
 
 			if (findName != WindowMain::thisMap2.end()) {
 				_this = findName->second;
+
+				// initialize handle for window now 
+				// to allow window class use it
+				WindowMain::thisMap[h] = _this;
+				_this->baseData.handle = h;
 			}
 		}
 	}
@@ -171,7 +176,15 @@ LRESULT CALLBACK WindowMain::WndProcTmp(HWND h, UINT msg, WPARAM wparam, LPARAM 
 
 void WindowMain::AddThisMap(HWND h, WindowMain *_this) {
 	thread::critical_section::scoped_lock lk(WindowMain::thisMapCs);
-	WindowMain::thisMap[h] = _this;
+
+	auto find = WindowMain::thisMap.find(h);
+
+	if (find == WindowMain::thisMap.end()) {
+		WindowMain::thisMap[h] = _this;
+	}
+	else {
+		H::System::Assert(_this == find->second);
+	}
 }
 
 void WindowMain::RemoveThisMap(HWND h, const std::wstring &name) {

@@ -4,6 +4,11 @@
 
 #include <memory>
 
+/*
+TODO
+- exceptions instead of true/false (maybe)
+*/
+
 class JsonObjectNativeRef : public JsonObject {
 public:
 	JsonObjectNativeRef(::Json::Value &obj);
