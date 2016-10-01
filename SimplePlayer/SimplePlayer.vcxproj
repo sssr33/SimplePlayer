@@ -154,6 +154,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Player\PlayerWindow.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Window\Window.h" />
@@ -162,6 +163,7 @@
     <ClInclude Include="Window\WindowMain.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Player\PlayerWindow.cpp" />
     <ClCompile Include="SimplePlayer.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="Window\Window.cpp" />

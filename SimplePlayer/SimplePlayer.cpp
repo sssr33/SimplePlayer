@@ -7,7 +7,8 @@
 #include <libhelpers\HJson.h>
 #include <libhelpers\Json\JsonObjectNative.h>
 
-#include "Window/WindowContainer.h"
+#include "Player\PlayerWindow.h"
+#include "Window\WindowContainer.h"
 
 /*
 TODO
@@ -33,15 +34,15 @@ int main() {
 
 	auto json2Text = json2->ToString();
 
-	/*HWND hWnd = GetConsoleWindow();
+	HWND hWnd = GetConsoleWindow();
 	ShowWindow(hWnd, SW_HIDE);
+
+	WindowContainer<PlayerWindow> playerWnd(L"Player");
 
 	while (true)
 	{
 
-	}*/
-
-	WindowContainer<Window> wnd;
+	}
 
 	return 0;
 }

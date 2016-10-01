@@ -7,6 +7,7 @@
     <ClInclude Include="Window\WindowContainer.h" />
     <ClInclude Include="Window\WindowBaseData.h" />
     <ClInclude Include="Window\WindowMain.h" />
+    <ClInclude Include="Player\PlayerWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -14,5 +15,6 @@
     <ClCompile Include="Window\Window.cpp" />
     <ClCompile Include="Window\WindowMain.cpp" />
     <ClCompile Include="Window\WindowBaseData.cpp" />
+    <ClCompile Include="Player\PlayerWindow.cpp" />
   </ItemGroup>
 </Project>

@@ -2,11 +2,13 @@
 
 #include <libhelpers\HSystem.h>
 
-WindowMain::WindowMain(WindowBaseData &baseData, Window &window) 
+WindowMain::WindowMain(WindowBaseData &baseData, Window &window, const std::wstring &windowTitle)
 	: baseData(baseData), window(window)
 {
 	WindowInitData initData;
 	auto initFuture = initData.InitPromise.get_future();
+
+	initData.windowTitle = windowTitle;
 
 	this->baseData.wndThread = std::thread([this, &initData]() {
 		this->WndThreadMain(&initData);
@@ -60,7 +62,7 @@ void WindowMain::WndThreadMain(WindowInitData *initData) {
 
 		this->baseData.handle = CreateWindowW(
 			this->baseData.className.data(),
-			L"WindowTitle",
+			initData->windowTitle.c_str(),
 			WS_OVERLAPPEDWINDOW,
 			CW_USEDEFAULT,
 			CW_USEDEFAULT,

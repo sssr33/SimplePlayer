@@ -40,7 +40,3 @@ HWND Window::GetHwnd() const {
 const std::wstring &Window::GetWndClassName() const {
 	return this->baseData.className;
 }
-
-void Window::ProcessMsg(uint32_t msg, WPARAM wparam, LPARAM lparam) {
-
-}

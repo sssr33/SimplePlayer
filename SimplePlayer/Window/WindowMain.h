@@ -13,11 +13,12 @@ enum class WindowMessages : uint32_t {
 
 struct WindowInitData {
 	std::promise<bool> InitPromise;
+	std::wstring windowTitle;
 };
 
 class WindowMain {
 public:
-	WindowMain(WindowBaseData &baseData, Window &window);
+	WindowMain(WindowBaseData &baseData, Window &window, const std::wstring &windowTitle);
 	~WindowMain();
 
 private:

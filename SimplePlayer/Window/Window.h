@@ -11,7 +11,7 @@ public:
 	DirectX::XMUINT2 GetSize() const;
 
 	void ProcessMessages();
-	virtual void ProcessMsg(uint32_t msg, WPARAM wparam, LPARAM lparam);
+	virtual void ProcessMsg(uint32_t msg, WPARAM wparam, LPARAM lparam) = 0;
 
 protected:
 	HWND GetHwnd() const;
