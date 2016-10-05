@@ -110,26 +110,31 @@ void WindowMain::WndThreadMain(WindowInitData *initData) {
 }
 
 LRESULT WindowMain::WndProc(HWND hwnd, uint32_t msg, WPARAM wparam, LPARAM lparam) {
-	this->window.ProcessMsg(msg, wparam, lparam);
+	auto procMsgRes = this->window.ProcessMsg(msg, wparam, lparam);
 
-	switch (msg) {
-	case WM_USER: {
-		auto msg = (WindowMessages)wparam;
+	if (!procMsgRes.handled) {
 		switch (msg) {
-		case WindowMessages::Shutdown:
-			DestroyWindow(this->baseData.handle);
-			break;
-		default:
+		case WM_USER: {
+			auto msg = (WindowMessages)wparam;
+			switch (msg) {
+			case WindowMessages::Shutdown:
+				DestroyWindow(this->baseData.handle);
+				break;
+			default:
+				break;
+			}
 			break;
 		}
-		break;
+		case WM_DESTROY:
+			PostQuitMessage(0);
+			break;
+		default:
+			// using hwnd from parameter because this->baseData.handle is null while initializing
+			return DefWindowProc(hwnd, msg, wparam, lparam);
+		}
 	}
-	case WM_DESTROY:
-		PostQuitMessage(0);
-		break;
-	default:
-		// using hwnd from parameter because this->baseData.handle is null while initializing
-		return DefWindowProc(hwnd, msg, wparam, lparam);
+	else {
+		return procMsgRes.lresult;
 	}
 
 	return 0L;

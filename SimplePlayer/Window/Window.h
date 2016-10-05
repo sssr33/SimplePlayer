@@ -3,6 +3,14 @@
 
 #include <DirectXMath.h>
 
+struct ProcessMsgResult {
+	LRESULT lresult;
+	bool handled;
+
+	ProcessMsgResult();
+	ProcessMsgResult(bool handled);
+};
+
 class Window {
 public:
 	Window(WindowBaseData &baseData);
@@ -11,7 +19,7 @@ public:
 	DirectX::XMUINT2 GetSize() const;
 
 	void ProcessMessages();
-	virtual void ProcessMsg(uint32_t msg, WPARAM wparam, LPARAM lparam) = 0;
+	virtual ProcessMsgResult ProcessMsg(uint32_t msg, WPARAM wparam, LPARAM lparam) = 0;
 
 protected:
 	HWND GetHwnd() const;

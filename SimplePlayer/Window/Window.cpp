@@ -2,6 +2,16 @@
 
 #include <libhelpers\HSystem.h>
 
+ProcessMsgResult::ProcessMsgResult() 
+	: lresult(0), handled(false)
+{
+}
+
+ProcessMsgResult::ProcessMsgResult(bool handled)
+	: lresult(0), handled(handled)
+{
+}
+
 Window::Window(WindowBaseData &baseData)
 	: baseData(baseData)
 {
