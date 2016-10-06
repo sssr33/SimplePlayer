@@ -10,6 +10,7 @@
     <ClInclude Include="Player\PlayerWindow.h" />
     <ClInclude Include="Dx\HwndOutput.h" />
     <ClInclude Include="Dx\HwndRenderer.h" />
+    <ClInclude Include="Player\PlayerRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -19,5 +20,6 @@
     <ClCompile Include="Window\WindowBaseData.cpp" />
     <ClCompile Include="Player\PlayerWindow.cpp" />
     <ClCompile Include="Dx\HwndOutput.cpp" />
+    <ClCompile Include="Player\PlayerRenderer.cpp" />
   </ItemGroup>
 </Project>

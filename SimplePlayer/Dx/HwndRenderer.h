@@ -10,10 +10,12 @@
 template<class T>
 class HwndRenderer {
 public:
+	template<class... Args>
 	HwndRenderer(HWND hwnd, Args&&... args)
 		: output(&this->dxDev, hwnd),
-		renderer(&this->dxDev, &this->output, std::forward<Args>(args)...)
-		renderThreadState(RenderThreadState::Pause)
+		renderer(&this->dxDev, &this->output, std::forward<Args>(args)...),
+		renderThreadState(RenderThreadState::Pause),
+		newSize(0.0f, 0.0f), resizeRequested(false)
 	{
 		this->renderThread = std::thread([=]() { this->RenderProc(); });
 	}
@@ -42,6 +44,13 @@ public:
 		this->renderThreadState = RenderThreadState::Pause;
 	}
 
+	void Resize(const DirectX::XMFLOAT2 &size) {
+		thread::critical_section::scoped_lock lk(this->cs);
+
+		this->resizeRequested = true;
+		this->newSize = size;
+	}
+
 private:
 	enum class RenderThreadState {
 		Work,
@@ -58,8 +67,29 @@ private:
 	std::thread renderThread;
 	RenderThreadState renderThreadState;
 
+	DirectX::XMFLOAT2 newSize;
+	bool resizeRequested;
+
 	void RenderProc() {
 		while (this->CheckRenderThreadState()) {
+			bool resize = false;
+			DirectX::XMFLOAT2 size;
+
+			{
+				thread::critical_section::scoped_lock lk(this->cs);
+				if (this->resizeRequested) {
+					resize = true;
+					size = this->newSize;
+					this->resizeRequested = false;
+				}
+			}
+
+			if (resize) {
+				this->output.SetLogicalSize(size);
+				this->output.Resize();
+				this->renderer.OutputParametersChanged();
+			}
+
 			this->output.BeginRender();
 			this->renderer.Render();
 			this->output.EndRender();
