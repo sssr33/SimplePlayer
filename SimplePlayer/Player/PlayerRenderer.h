@@ -9,4 +9,8 @@ public:
 
 	void Render() override;
 	void OutputParametersChanged() override;
+
+	void PointerPressed(const DirectX::XMFLOAT2 &pt);
+	void PointerMoved(const DirectX::XMFLOAT2 &pt);
+	void PointerReleased(const DirectX::XMFLOAT2 &pt);
 };

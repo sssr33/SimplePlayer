@@ -105,6 +105,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\HJson.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Json\JsonObjectNative.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Json\JsonObject.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Thread\TaskQueueWorker.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Dx\D2DCtxMt.cpp" />
@@ -158,5 +159,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\HJson.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Json\JsonObjectNative.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Json\JsonObject.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Thread\TaskQueueWorker.cpp" />
   </ItemGroup>
 </Project>

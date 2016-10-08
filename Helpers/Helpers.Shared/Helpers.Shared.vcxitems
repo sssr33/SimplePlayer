@@ -117,6 +117,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Thread\PPL\critical_section_guard.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Thread\PPL\critical_section_lock.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Thread\PPL\safe_task.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Thread\TaskQueueWorker.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Thread\ThreadPool.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Thread\ThreadTask.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Thread\ThreadTaskBase.h" />
@@ -174,6 +175,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Thread\LockStack\StdMutexLockLS.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Thread\LockStack\ThreadCsLockLS.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Thread\LockStack\ThreadLockStackLS.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Thread\TaskQueueWorker.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Timer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\ToString.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\TypeConverter.cpp" />

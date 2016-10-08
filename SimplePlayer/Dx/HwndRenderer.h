@@ -31,6 +31,10 @@ public:
 		}
 	}
 
+	T *operator->() {
+		return &this->renderer;
+	}
+
 	void ContinueRendering() {
 		thread::critical_section::scoped_lock lk(this->cs);
 		

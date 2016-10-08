@@ -2,9 +2,6 @@
 //
 
 #include "stdafx.h"
-
-#include <memory>
-
 #include "Player\PlayerWindow.h"
 #include "Window\WindowContainer.h"
 

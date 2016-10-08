@@ -32,3 +32,12 @@ void PlayerRenderer::Render() {
 
 void PlayerRenderer::OutputParametersChanged() {
 }
+
+void PlayerRenderer::PointerPressed(const DirectX::XMFLOAT2 &pt) {
+}
+
+void PlayerRenderer::PointerMoved(const DirectX::XMFLOAT2 &pt) {
+}
+
+void PlayerRenderer::PointerReleased(const DirectX::XMFLOAT2 &pt) {
+}
