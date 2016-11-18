@@ -11,6 +11,7 @@
     <ClInclude Include="Dx\HwndOutput.h" />
     <ClInclude Include="Dx\HwndRenderer.h" />
     <ClInclude Include="Player\PlayerRenderer.h" />
+    <ClInclude Include="Player\Console\Console.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -21,5 +22,6 @@
     <ClCompile Include="Player\PlayerWindow.cpp" />
     <ClCompile Include="Dx\HwndOutput.cpp" />
     <ClCompile Include="Player\PlayerRenderer.cpp" />
+    <ClCompile Include="Player\Console\Console.cpp" />
   </ItemGroup>
 </Project>

@@ -156,6 +156,7 @@
   <ItemGroup>
     <ClInclude Include="Dx\HwndOutput.h" />
     <ClInclude Include="Dx\HwndRenderer.h" />
+    <ClInclude Include="Player\Console\Console.h" />
     <ClInclude Include="Player\PlayerRenderer.h" />
     <ClInclude Include="Player\PlayerWindow.h" />
     <ClInclude Include="stdafx.h" />
@@ -167,6 +168,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dx\HwndOutput.cpp" />
+    <ClCompile Include="Player\Console\Console.cpp" />
     <ClCompile Include="Player\PlayerRenderer.cpp" />
     <ClCompile Include="Player\PlayerWindow.cpp" />
     <ClCompile Include="SimplePlayer.cpp" />
