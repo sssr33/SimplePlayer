@@ -52,7 +52,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Dx\Renderer\IRenderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Dx\Renderer\WinRtRenderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Dx\Renderer\SwapChainPanelOutput.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Dx\DxDeviceCtxProvider.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Dx\Layers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Dx\Layers\DxLayerStack.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Dx\Layers\DxLayerStackResources.h" />
@@ -78,7 +77,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Thread\LockStack\ThreadCsLockLS.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Thread\LockStack\ThreadLockStackLS.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Dx\State\BlendState\BlendStateCache.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Dx\State\BlendState\OMBlendState.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\DebugScopedWatch.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Filesystem\IStreamFS.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Filesystem\IFolderFS.h" />
@@ -106,6 +104,15 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Json\JsonObjectNative.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Json\JsonObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Thread\TaskQueueWorker.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Dx\Renderer\D3D11ImageIOutput.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Dx\Renderer\ISurface9Access.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Dx\Renderer\OrientationTypes.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Dx\Renderer\Texture9On11Output.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Dx\Renderer\Texture9On11Renderer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Dx\State\D3DTargetState.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Dx\State\OMBlendState.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Dx\State\PSShaderResourceState.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\HColor.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Dx\D2DCtxMt.cpp" />
@@ -130,7 +137,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Dx\Renderer\IOutput.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Dx\Renderer\IRenderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Dx\Renderer\SwapChainPanelOutput.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Dx\DxDeviceCtxProvider.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Dx\Layers\DxLayerStack.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Dx\Layers\DxLayerStackResources.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Dx\Layers\DxLayerStackState.cpp" />
@@ -148,7 +154,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Thread\LockStack\ThreadCsLockLS.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Thread\LockStack\ThreadLockStackLS.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Dx\State\BlendState\BlendStateCache.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Dx\State\BlendState\OMBlendState.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\DebugScopedWatch.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Filesystem\CtorDtorImplFS.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\HResultException.cpp" />
@@ -160,5 +165,10 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Json\JsonObjectNative.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Json\JsonObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Thread\TaskQueueWorker.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Thread\critical_section.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Dx\Renderer\D3D11ImageIOutput.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Dx\Renderer\Texture9On11Output.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Dx\State\OMBlendState.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\HColor.cpp" />
   </ItemGroup>
 </Project>

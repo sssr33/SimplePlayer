@@ -16,8 +16,10 @@ ID2D1Device *DxDeviceMt::GetD2DDevice() const {
 	return this->d2dDevice.Get();
 }
 
-D2DCtxMt *DxDeviceMt::GetD2DCtxMt() {
-	return &this->d2dCtxMt;
+D2DCtxMt *DxDeviceMt::GetD2DCtxMt() const {
+	// TODO try to find better approach than const_cast
+	D2DCtxMt *tmp = const_cast<D2DCtxMt *>(&this->d2dCtxMt);
+	return tmp;
 }
 
 Microsoft::WRL::ComPtr<IDWriteFactory> DxDeviceMt::GetDwriteFactoryCPtr() const {

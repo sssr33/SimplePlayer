@@ -1,7 +1,7 @@
 #pragma once
 #include "DxLayerStackResources.h"
 #include "DxLayerStackState.h"
-#include "..\DxDeviceCtxProvider.h"
+#include "..\DxDeviceCtx.h"
 #include "libhelpers\raw_ptr.h"
 #include "libhelpers\ScopedPushBase.h"
 
@@ -14,22 +14,40 @@
 class DxLayerStack {
 public:
 	struct PushScope0 : public ScopedPushBase<DxLayerStack> {
+		NO_COPY(PushScope0);
+
+		PushScope0();
+		PushScope0(PushScope0 &&other);
 		~PushScope0();
+
+		PushScope0 &operator=(PushScope0 &&other);
 	};
 	typedef ScopedPushWrapper<DxLayerStack, PushScope0> RenderTargetScope;
 
 	struct PushScope1 : public ScopedPushBase<DxLayerStack> {
+		NO_COPY(PushScope1);
+
+		PushScope1();
+		PushScope1(PushScope1 &&other);
 		~PushScope1();
+
+		PushScope1 &operator=(PushScope1 &&other);
 	};
 	typedef ScopedPushWrapper<DxLayerStack, PushScope1> LayerScope;
 
 	struct PushScope2 : public ScopedPushBase<DxLayerStack> {
+		NO_COPY(PushScope2);
+
+		PushScope2();
+		PushScope2(PushScope2 &&other);
 		~PushScope2();
+
+		PushScope2 &operator=(PushScope2 &&other);
 	};
 	typedef ScopedPushWrapper<DxLayerStack, PushScope2> AxisAlignedClipScope;
 
 	DxLayerStack(
-		DxDeviceCtxProvider *dxCtxProv,
+		DxDeviceCtx *dxCtxProv,
 		DxLayerStackResources *resources);
 
 	// call before d3d draw calls to apply previous d2d layers to d3d rendering
@@ -49,7 +67,7 @@ public:
 	void PopAxisAlignedClip();
 
 private:
-	DxDeviceCtxProvider *dxCtxProv;
+	DxDeviceCtx *dxCtxProv;
 	DxLayerStackResources *resources;
 
 	std::vector<D2D1_RECT_F> layerSizes;

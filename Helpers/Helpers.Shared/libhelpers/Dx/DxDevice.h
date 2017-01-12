@@ -1,6 +1,6 @@
 #pragma once
-#include "DxDeviceCtx.h"
 #include "DxDeviceMt.h"
+#include "DxDeviceCtx.h"
 
 #include <d3d11.h>
 #include <d2d1.h>
@@ -11,8 +11,6 @@
 #include <DirectXColors.h>
 #include <wrl.h>
 
-#include <libhelpers\Thread\PPL\critical_section_guard.h>
-
 struct DxDeviceParams {
 	static const uint32_t DefaultD3D11CreateFlags;
 
@@ -22,21 +20,19 @@ struct DxDeviceParams {
 	DxDeviceParams(uint32_t d3d11CreateFlags);
 };
 
-class DxDevice : public DxDeviceMt {
+class DxDevice : public DxDeviceMt, public DxDeviceCtx {
 public:
+	// https://msdn.microsoft.com/en-us/library/windows/desktop/dd756649%28v=vs.85%29.aspx
+	static const float D2DDefaultDPI;
+
 	DxDevice(const DxDeviceParams *params = nullptr);
 	~DxDevice();
 
-	// Returns DxDeviceCtx wrapped in critical_section_guard
-	// destroy wrapped DxDeviceCtx only when objects from DxDeviceCtx aren't needed.
-	critical_section_guard<DxDeviceCtx>::Accessor GetContext();
-
 	D3D_FEATURE_LEVEL GetDeviceFeatureLevel() const;
 
-private:
-	// cs-protected
-	critical_section_guard<DxDeviceCtx> ctx;
+	void Trim();
 
+private:
 	D3D_FEATURE_LEVEL featureLevel;
 
 	void CreateDeviceIndependentResources();

@@ -15,7 +15,6 @@ enum class RenderThreadState {
 	Stop, // thread will exit very soon
 };
 
-#ifdef WINRT_Any
 template<class T>
 class WinRtRenderer {
 public:
@@ -145,6 +144,14 @@ public:
 	std::function<void(Windows::UI::Input::PointerPoint^)> pointerReleased;
 	std::function<void(Windows::UI::Input::PointerPoint^)> pointerWheelChanged;
 
+	DirectX::XMFLOAT4 GetRTColor() const {
+		return this->output.GetRTColor();
+	}
+
+	void SetRTColor(const DirectX::XMFLOAT4 &color) {
+		this->output.SetRTColor(color);
+	}
+
 private:
 	DxDevice dxDev;
 	SwapChainPanelOutput output;
@@ -174,21 +181,14 @@ private:
 			auto pt = args->CurrentPoint;
 			this->pointerMoves = true;
 
-#ifdef WINRT_Input
 			this->pointerPressed(pt);
-#endif // WINRT_Input
-
 		});
 		this->coreInput->PointerMoved += H::System::MakeTypedEventHandler(
 			[=](Platform::Object ^sender, Windows::UI::Core::PointerEventArgs ^args)
 		{
 			if (this->pointerMoves) {
 				auto pt = args->CurrentPoint;
-
-#ifdef WINRT_Input
 				this->pointerMoved(pt);
-#endif // DEBUG
-
 			}
 		});
 		this->coreInput->PointerReleased += H::System::MakeTypedEventHandler(
@@ -197,20 +197,13 @@ private:
 			auto pt = args->CurrentPoint;
 			this->pointerMoves = false;
 
-#ifdef WINRT_Input
 			this->pointerReleased(pt);
-#endif // WINRT_Input
-
 		});
 		this->coreInput->PointerWheelChanged += H::System::MakeTypedEventHandler(
 			[=](Platform::Object ^sender, Windows::UI::Core::PointerEventArgs ^args)
 		{
 			auto pt = args->CurrentPoint;
-
-#ifdef WINRT_Input
 			this->pointerWheelChanged(pt);
-#endif // WINRT_Input
-
 		});
 
 		this->coreInput->Dispatcher->ProcessEvents(Windows::UI::Core::CoreProcessEventsOption::ProcessUntilQuit);
@@ -283,4 +276,3 @@ private:
 		}
 	}
 };
-#endif // WINRT_Any

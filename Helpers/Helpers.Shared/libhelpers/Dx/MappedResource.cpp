@@ -10,8 +10,31 @@ MappedResource::MappedResource(ID3D11DeviceContext *d3dCtx, ID3D11Resource *res,
 	H::System::ThrowIfFailed(hr);
 }
 
+MappedResource::MappedResource(MappedResource &&other) 
+	: d3dCtx(std::move(other.d3dCtx)), res(std::move(other.res)),
+	subresource(std::move(other.subresource))
+{
+	other.d3dCtx = nullptr;
+	other.res = nullptr;
+}
+
 MappedResource::~MappedResource() {
-	this->d3dCtx->Unmap(this->res, this->subresource);
+	if (this->d3dCtx) {
+		this->d3dCtx->Unmap(this->res, this->subresource);
+	}
+}
+
+MappedResource &MappedResource::operator=(MappedResource &&other) {
+	if (this != &other) {
+		this->d3dCtx = std::move(other.d3dCtx);
+		this->res = std::move(other.res);
+		this->subresource = std::move(other.subresource);
+
+		other.d3dCtx = nullptr;
+		other.res = nullptr;
+	}
+
+	return *this;
 }
 
 void *MappedResource::GetData() const {

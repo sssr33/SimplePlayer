@@ -13,4 +13,7 @@ public:
 	virtual ID2D1Bitmap1 *GetD2DRtView() const = 0;
 	virtual D2D1_MATRIX_3X2_F GetD2DOrientationTransform() const = 0;
 	virtual DirectX::XMFLOAT4X4 GetD3DOrientationTransform() const = 0;
+
+	virtual OrientationTypes GetOrientation() const = 0;
+	virtual OrientationTypes GetNativeOrientation() const = 0;
 };

@@ -1,51 +1,41 @@
 #include "DxDeviceCtx.h"
 
-#include <utility>
+#include <libhelpers\HSystem.h>
 
-DxDeviceCtx::DxDeviceCtx() {
+void DxDeviceCtx::LockCtx() {
+	this->ctxCs.lock();
 }
 
-DxDeviceCtx::DxDeviceCtx(
-	const Microsoft::WRL::ComPtr<ID3D11DeviceContext1> &d3dCtx,
-	const Microsoft::WRL::ComPtr<ID2D1DeviceContext> &d2dCtx)
-	: d3dCtx(d3dCtx), d2dCtx(d2dCtx)
-{
+thread::critical_section::scoped_lock DxDeviceCtx::LockCtxScoped() {
+	thread::critical_section::scoped_lock lk(this->ctxCs);
+	return lk;
 }
 
-DxDeviceCtx::DxDeviceCtx(const DxDeviceCtx &other)
-	: d3dCtx(other.d3dCtx), d2dCtx(other.d2dCtx) {
-}
-
-DxDeviceCtx::DxDeviceCtx(DxDeviceCtx &&other)
-	: d3dCtx(std::move(other.d3dCtx)), d2dCtx(std::move(other.d2dCtx))
-{
-}
-
-DxDeviceCtx &DxDeviceCtx::operator=(const DxDeviceCtx &other) {
-	if (this != &other) {
-		this->d3dCtx = other.d3dCtx;
-		this->d2dCtx = other.d2dCtx;
-	}
-
-	return *this;
-}
-
-DxDeviceCtx &DxDeviceCtx::operator=(DxDeviceCtx &&other) {
-	if (this != &other) {
-		this->d3dCtx = std::move(other.d3dCtx);
-		this->d2dCtx = std::move(other.d2dCtx);
-	}
-
-	return *this;
-}
-
-DxDeviceCtx::~DxDeviceCtx() {
+thread::critical_section::scoped_yield_lock DxDeviceCtx::LockYieldCtxScoped() {
+	thread::critical_section::scoped_yield_lock lk(this->ctxCs);
+	return lk;
 }
 
 ID3D11DeviceContext1 *DxDeviceCtx::D3D() const {
+	hAssert(this->ctxCs.owned());
 	return this->d3dCtx.Get();
 }
 
 ID2D1DeviceContext *DxDeviceCtx::D2D() const {
+	hAssert(this->ctxCs.owned());
 	return this->d2dCtx.Get();
+}
+
+void DxDeviceCtx::UnlockCtx() {
+	this->ctxCs.unlock();
+}
+
+void DxDeviceCtx::D3D(const Microsoft::WRL::ComPtr<ID3D11DeviceContext1> &d3dCtx) {
+	hAssert(this->ctxCs.owned());
+	this->d3dCtx = d3dCtx;
+}
+
+void DxDeviceCtx::D2D(const Microsoft::WRL::ComPtr<ID2D1DeviceContext> &d2dCtx) {
+	hAssert(this->ctxCs.owned());
+	this->d2dCtx = d2dCtx;
 }

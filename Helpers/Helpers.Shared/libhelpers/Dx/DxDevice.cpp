@@ -2,6 +2,8 @@
 #include "libhelpers\HSystem.h"
 #include "libhelpers\Macros.h"
 
+#include <dxgi1_3.h>
+
 const uint32_t DxDeviceParams::DefaultD3D11CreateFlags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
 
 DxDeviceParams::DxDeviceParams() 
@@ -17,22 +19,36 @@ DxDeviceParams::DxDeviceParams(uint32_t d3d11CreateFlags)
 
 
 
+// https://msdn.microsoft.com/en-us/library/windows/desktop/dd756649%28v=vs.85%29.aspx
+const float DxDevice::D2DDefaultDPI = 96.0f;
+
 DxDevice::DxDevice(const DxDeviceParams *params)
 	: featureLevel(D3D_FEATURE_LEVEL_9_1)
 {
 	this->CreateDeviceIndependentResources();
-	this->CreateDeviceDependentResources(params);
+
+	{
+		auto ctxLock = this->LockCtxScoped();
+		this->CreateDeviceDependentResources(params);
+	}
 }
 
 DxDevice::~DxDevice() {
 }
 
-critical_section_guard<DxDeviceCtx>::Accessor DxDevice::GetContext() {
-	return this->ctx.Get();
-}
-
 D3D_FEATURE_LEVEL DxDevice::GetDeviceFeatureLevel() const {
 	return this->featureLevel;
+}
+
+void DxDevice::Trim() {
+	HRESULT hr = S_OK;
+	Microsoft::WRL::ComPtr<IDXGIDevice3> dxgiDev;
+	auto d3dDev = this->GetD3DDevice();
+
+	hr = d3dDev->QueryInterface(IID_PPV_ARGS(dxgiDev.GetAddressOf()));
+	H::System::ThrowIfFailed(hr);
+
+	dxgiDev->Trim();
 }
 
 void DxDevice::CreateDeviceIndependentResources() {
@@ -104,8 +120,8 @@ void DxDevice::CreateDeviceDependentResources(const DxDeviceParams *params) {
 
 	this->d2dCtxMt = D2DCtxMt(d2dCtx);
 
-	auto ctxAcc = this->ctx.Get();
-	*ctxAcc = DxDeviceCtx(d3dCtx, d2dCtx);
+	this->D3D(d3dCtx);
+	this->D2D(d2dCtx);
 }
 
 void DxDevice::EnableD3DDeviceMultithreading() {

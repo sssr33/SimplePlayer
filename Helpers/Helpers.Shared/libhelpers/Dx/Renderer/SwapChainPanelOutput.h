@@ -3,8 +3,10 @@
 #include "IOutput.h"
 #include "../Dx.h"
 #include "../../raw_ptr.h"
+#include "libhelpers\Aligned.h"
 
 #if HAVE_WINRT == 1
+
 class SwapChainPanelOutput : public IOutput {
 	static const uint32_t BufferCount = 2;
 	static const DXGI_FORMAT BufferFmt = DXGI_FORMAT_B8G8R8A8_UNORM;
@@ -36,6 +38,12 @@ public:
 	void EndRender();
 	void Present();
 
+	DirectX::XMFLOAT4 GetRTColor() const;
+	void SetRTColor(const DirectX::XMFLOAT4 &color);
+
+	OrientationTypes GetOrientation() const override;
+	OrientationTypes GetNativeOrientation() const override;
+
 private:
 	raw_ptr<DxDevice> dxDev;
 	Windows::UI::Xaml::Controls::SwapChainPanel ^swapChainPanel;
@@ -53,6 +61,8 @@ private:
 	DirectX::XMFLOAT2 logicalSize;
 	DirectX::XMFLOAT2 physicalSize;
 	DirectX::XMFLOAT2 compositionScale;
+
+	DirectX::XMFLOAT4 rtColor;
 
 	void CreateWindowSizeDependentResources();
 	void CreateSwapChain();

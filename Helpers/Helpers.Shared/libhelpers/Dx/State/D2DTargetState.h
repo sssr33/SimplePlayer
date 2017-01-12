@@ -4,10 +4,13 @@
 
 class D2DTargetState {
 public:
-	NO_COPY_MOVE(D2DTargetState);
+	NO_COPY(D2DTargetState);
 
 	D2DTargetState(ID2D1DeviceContext *d2dCtx);
+	D2DTargetState(D2DTargetState &&other);
 	~D2DTargetState();
+
+	D2DTargetState &operator=(D2DTargetState &&other);
 
 	const DirectX::XMFLOAT2 &GetDPI() const;
 

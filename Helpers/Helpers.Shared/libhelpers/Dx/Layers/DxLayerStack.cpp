@@ -1,20 +1,62 @@
 #include "DxLayerStack.h"
 #include "libhelpers\HSystem.h"
 
+DxLayerStack::PushScope0::PushScope0() {}
+
+DxLayerStack::PushScope0::PushScope0(PushScope0 &&other) 
+	: ScopedPushBase(std::move(other))
+{
+}
+
 DxLayerStack::PushScope0::~PushScope0() {
-	this->parent->PopRenderTarget();
+	if (this->parent) {
+		this->parent->PopRenderTarget();
+	}
+}
+
+DxLayerStack::PushScope0 &DxLayerStack::PushScope0::operator=(PushScope0 &&other) {
+	ScopedPushBase::operator=(std::move(other));
+	return *this;
+}
+
+DxLayerStack::PushScope1::PushScope1() {}
+
+DxLayerStack::PushScope1::PushScope1(PushScope1 &&other) 
+	: ScopedPushBase(std::move(other))
+{
 }
 
 DxLayerStack::PushScope1::~PushScope1() {
-	this->parent->PopLayer();
+	if (this->parent) {
+		this->parent->PopLayer();
+	}
+}
+
+DxLayerStack::PushScope1 &DxLayerStack::PushScope1::operator=(PushScope1 &&other) {
+	ScopedPushBase::operator=(std::move(other));
+	return *this;
+}
+
+DxLayerStack::PushScope2::PushScope2() {}
+
+DxLayerStack::PushScope2::PushScope2(PushScope2 &&other)
+	: ScopedPushBase(std::move(other))
+{
 }
 
 DxLayerStack::PushScope2::~PushScope2() {
-	this->parent->PopAxisAlignedClip();
+	if (this->parent) {
+		this->parent->PopAxisAlignedClip();
+	}
+}
+
+DxLayerStack::PushScope2 &DxLayerStack::PushScope2::operator=(PushScope2 &&other) {
+	ScopedPushBase::operator=(std::move(other));
+	return *this;
 }
 
 DxLayerStack::DxLayerStack(
-	DxDeviceCtxProvider *dxCtxProv,
+	DxDeviceCtx *dxCtxProv,
 	DxLayerStackResources *resources)
 	: dxCtxProv(dxCtxProv), resources(resources)
 {
@@ -33,6 +75,19 @@ DxLayerStackState DxLayerStack::BeginD3D() {
 
 	hr = d2dCtx->Flush();
 	H::System::ThrowIfFailed(hr);
+
+	float dpiX, dpiY;
+
+	d2dCtx->GetDpi(&dpiX, &dpiY);
+
+	dpiX = dpiX / 96;
+	dpiY = dpiY / 96;
+
+	rect.left *= dpiX;
+	rect.right *= dpiX;
+
+	rect.top *= dpiY;
+	rect.bottom *= dpiY;
 
 	d3dCtx->RSGetViewports(&numViewports, &viewport);
 

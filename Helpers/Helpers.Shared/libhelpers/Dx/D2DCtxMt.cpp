@@ -219,3 +219,24 @@ HRESULT D2DCtxMt::CreateEffect(
 {
 	return this->d2dCtx->CreateEffect(effectId, effect);
 }
+
+void D2DCtxMt::GetDpi(
+	_Out_ FLOAT* dpiX,
+	_Out_ FLOAT* dpiY
+) {
+	this->d2dCtx->GetDpi(dpiX, dpiY);
+}
+
+// CreateLayer
+HRESULT D2DCtxMt::CreateLayer(
+	D2D1_SIZE_F size,
+	_Outptr_ ID2D1Layer **layer)
+{
+	return this->d2dCtx->CreateLayer(size, layer);
+}
+
+HRESULT D2DCtxMt::CreateLayer(
+	_Outptr_ ID2D1Layer **layer)
+{
+	return this->d2dCtx->CreateLayer(layer);
+}

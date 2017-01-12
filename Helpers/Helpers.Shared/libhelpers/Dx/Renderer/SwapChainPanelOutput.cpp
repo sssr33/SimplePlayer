@@ -1,5 +1,6 @@
 #include "SwapChainPanelOutput.h"
-#include "../../HSystem.h"
+#include "..\..\HSystem.h"
+#include "..\..\HColor.h"
 
 #include <dxgi1_2.h>
 #include <dxgi1_3.h>
@@ -48,8 +49,11 @@ SwapChainPanelOutput::SwapChainPanelOutput(
 	raw_ptr<DxDevice> dxDev,
 	Windows::UI::Xaml::Controls::SwapChainPanel ^swapChainPanel)
 	: dxDev(dxDev), swapChainPanel(swapChainPanel), physicalSize(1.0f, 1.0f),
-	d2dOrientationTransform(D2D1::IdentityMatrix()), d3dOrientationTransform(ScreenRotation::Rotation0)
-{
+	d2dOrientationTransform(D2D1::IdentityMatrix()), d3dOrientationTransform(ScreenRotation::Rotation0) {
+	{
+		auto tmp = DirectX::Colors::Transparent;
+		this->rtColor = { tmp.f[0], tmp.f[1], tmp.f[2], tmp.f[3] };
+	}
 	auto displayInformation = Windows::Graphics::Display::DisplayInformation::GetForCurrentView();
 
 	this->nativeOrientation = displayInformation->NativeOrientation;
@@ -85,7 +89,7 @@ D3D11_VIEWPORT SwapChainPanelOutput::GetD3DViewport() const {
 	viewport.MaxDepth = 1.0f;
 	viewport.Width = this->physicalSize.x;
 	viewport.Height = this->physicalSize.y;
-
+	
 	return viewport;
 }
 
@@ -140,11 +144,16 @@ void SwapChainPanelOutput::Resize() {
 void SwapChainPanelOutput::BeginRender() {
 	auto rtView = this->GetD3DRtView();
 	ID3D11RenderTargetView *const targets[1] = { this->GetD3DRtView() };
-	auto ctx = this->dxDev->GetContext();
+	auto ctx = this->dxDev->LockCtxScoped();
 
-	ctx->D3D()->OMSetRenderTargets(1, targets, nullptr);
-
-	ctx->D3D()->ClearRenderTargetView(this->GetD3DRtView(), DirectX::Colors::LightGreen);
+	this->dxDev->D3D()->OMSetRenderTargets(1, targets, nullptr);
+	auto premultiplied = H::Color::PremultiplyColor(this->rtColor);
+	DirectX::XMVECTORF32 tmp = { 
+		premultiplied.x,
+		premultiplied.y,
+		premultiplied.z,
+		premultiplied.w };
+	this->dxDev->D3D()->ClearRenderTargetView(this->GetD3DRtView(), tmp);
 }
 
 void SwapChainPanelOutput::EndRender() {
@@ -158,12 +167,12 @@ void SwapChainPanelOutput::Present() {
 	HRESULT hr = this->swapChain->Present(1, 0);
 
 	{
-		auto ctx = this->dxDev->GetContext();
+		auto ctx = this->dxDev->LockCtxScoped();
 
 		// Discard the contents of the render target.
 		// This is a valid operation only when the existing contents will be entirely
 		// overwritten. If dirty or scroll rects are used, this call should be modified.
-		ctx->D3D()->DiscardView1(this->d3dRenderTargetView.Get(), nullptr, 0);
+		this->dxDev->D3D()->DiscardView1(this->d3dRenderTargetView.Get(), nullptr, 0);
 	}
 
 	//// If the device was removed either by a disconnection or a driver upgrade, we 
@@ -176,6 +185,54 @@ void SwapChainPanelOutput::Present() {
 	//{
 	//	DX::ThrowIfFailed(hr);
 	//}
+}
+
+DirectX::XMFLOAT4 SwapChainPanelOutput::GetRTColor() const {
+	return this->rtColor;
+}
+
+void SwapChainPanelOutput::SetRTColor(const DirectX::XMFLOAT4 &color) {
+	this->rtColor = color;
+}
+
+OrientationTypes SwapChainPanelOutput::GetOrientation() const {
+	switch (this->currentOrientation) {
+	case Windows::Graphics::Display::DisplayOrientations::Landscape:
+		return OrientationTypes::Landscape;
+		break;
+	case Windows::Graphics::Display::DisplayOrientations::LandscapeFlipped:
+		return OrientationTypes::FlippedLandscape;
+		break;
+	case Windows::Graphics::Display::DisplayOrientations::Portrait:
+		return OrientationTypes::Portrait;
+		break;
+	case Windows::Graphics::Display::DisplayOrientations::PortraitFlipped:
+		return OrientationTypes::FlippedPortrait;
+		break;
+	default:
+		return OrientationTypes::None;
+		break;
+	}
+}
+
+OrientationTypes SwapChainPanelOutput::GetNativeOrientation() const {
+	switch (this->nativeOrientation) {
+	case Windows::Graphics::Display::DisplayOrientations::Landscape:
+		return OrientationTypes::Landscape;
+		break;
+	case Windows::Graphics::Display::DisplayOrientations::LandscapeFlipped:
+		return OrientationTypes::FlippedLandscape;
+		break;
+	case Windows::Graphics::Display::DisplayOrientations::Portrait:
+		return OrientationTypes::Portrait;
+		break;
+	case Windows::Graphics::Display::DisplayOrientations::PortraitFlipped:
+		return OrientationTypes::FlippedPortrait;
+		break;
+	default:
+		return OrientationTypes::None;
+		break;
+	}
 }
 
 void SwapChainPanelOutput::CreateWindowSizeDependentResources() {
@@ -199,11 +256,11 @@ void SwapChainPanelOutput::CreateWindowSizeDependentResources() {
 	this->d2dTargetBitmap = nullptr;
 
 	{
-		auto ctx = this->dxDev->GetContext();
+		auto ctx = this->dxDev->LockCtxScoped();
 
-		ctx->D2D()->SetTarget(nullptr);
-		ctx->D3D()->OMSetRenderTargets(ARRAYSIZE(nullViews), nullViews, nullptr);
-		ctx->D3D()->Flush();
+		this->dxDev->D2D()->SetTarget(nullptr);
+		this->dxDev->D3D()->OMSetRenderTargets(ARRAYSIZE(nullViews), nullViews, nullptr);
+		this->dxDev->D3D()->Flush();
 	}
 
 	this->UpdatePresentationParameters();
@@ -262,13 +319,13 @@ void SwapChainPanelOutput::CreateWindowSizeDependentResources() {
 
 	{
 		auto viewport = this->GetD3DViewport();
-		auto ctx = this->dxDev->GetContext();
+		auto ctx = this->dxDev->LockCtxScoped();
 
-		ctx->D3D()->RSSetViewports(1, &viewport);
+		this->dxDev->D3D()->RSSetViewports(1, &viewport);
 
-		ctx->D2D()->SetTarget(this->d2dTargetBitmap.Get());
-		ctx->D2D()->SetDpi(this->logicalDpi, this->logicalDpi);
-		ctx->D2D()->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE);
+		this->dxDev->D2D()->SetTarget(this->d2dTargetBitmap.Get());
+		this->dxDev->D2D()->SetDpi(this->logicalDpi, this->logicalDpi);
+		this->dxDev->D2D()->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE);
 	}
 }
 
@@ -294,7 +351,7 @@ void SwapChainPanelOutput::CreateSwapChain() {
 	swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL;	// All Windows Store apps must use _FLIP_ SwapEffects.
 	swapChainDesc.Flags = 0;
 	swapChainDesc.Scaling = scaling;
-	swapChainDesc.AlphaMode = DXGI_ALPHA_MODE_IGNORE;
+	swapChainDesc.AlphaMode = DXGI_ALPHA_MODE_PREMULTIPLIED;
 
 	hr = d3dDev.As(&dxgiDevice);
 	H::System::ThrowIfFailed(hr);

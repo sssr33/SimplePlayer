@@ -1,8 +1,12 @@
 #include "HSystem.h"
 #include "HData.h"
+//#include "Logger\NativeLogger.h"
 
 namespace H {
 	void System::DebuggerBreak(wchar_t* str) {
+		if (str) {
+			//logging::Logger::ReportMessage(str);
+		}
 #if defined(HAVE_VISUAL_STUDIO) && defined(_DEBUG)
 		__debugbreak();
 #else
@@ -13,7 +17,11 @@ namespace H {
 
 	void System::Assert(bool expression, wchar_t* str) {
 		if (!expression) {
-			System::DebuggerBreak(); 
+			System::DebuggerBreak();
+
+			if (str) {
+				//logging::Logger::ReportMessage(str);
+			}
 		}
 		assert(expression);
 	}

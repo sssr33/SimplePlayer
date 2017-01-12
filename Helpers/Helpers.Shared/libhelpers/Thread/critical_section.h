@@ -4,6 +4,7 @@
 #include <Windows.h>
 #include <chrono>
 #include <memory>
+#include <string>
 
 namespace thread {
 	class condition_variable;
@@ -13,24 +14,27 @@ namespace thread {
 		NO_COPY_MOVE(critical_section);
 
 		// default value of spinCount - https://msdn.microsoft.com/en-us/library/windows/desktop/ms683477%28v=vs.85%29.aspx
-		critical_section(DWORD spinCount = 4000) {
-			InitializeCriticalSectionEx(&this->cs, spinCount, 0);
-		}
+		critical_section(DWORD spinCount = 4000);
+		~critical_section();
 
-		~critical_section() {
-			DeleteCriticalSection(&this->cs);
-		}
+		void lock();
+		void unlock();
 
-		void lock() {
-			EnterCriticalSection(&this->cs);
-		}
+#ifdef _DEBUG
+		bool owned() const;
+#endif // _DEBUG
 
-		void unlock() {
-			LeaveCriticalSection(&this->cs);
-		}
 
 	private:
 		CRITICAL_SECTION cs;
+
+#ifdef _DEBUG
+		std::string ownerId;
+
+		void own();
+		void unown();
+#endif // _DEBUG
+
 
 		friend class condition_variable;
 
@@ -46,9 +50,9 @@ namespace thread {
 				// http://stackoverflow.com/questions/3992715/critical-section-problem-in-windows-7
 				//std::this_thread::sleep_for(std::chrono::nanoseconds(1)); // ok, nanotechnology is on duty
 				Sleep(1); // almost ok, but this is a whole 1 millisecond! UPD looks like this works better
-				//std::this_thread::yield(); // a bit better
-				//Sleep(0); // - better
-				// no wait - works really bad for fast lock/unlock scenarios
+						  //std::this_thread::yield(); // a bit better
+						  //Sleep(0); // - better
+						  // no wait - works really bad for fast lock/unlock scenarios
 			}
 		};
 
@@ -106,18 +110,18 @@ namespace thread {
 		// for common use
 		typedef scoped_lock_base<false> scoped_lock;
 
-		/* 
+		/*
 		for use in sections with fast can occur
 		example of such section:
 		1   while(true){
 		2     // no work at this line...
 		3   scoped_yield_lock lk(cs);
 		4   some work...
-		      // no work after lk is out of scope...
-		      // because after 4th line we will go to next iteration of while(i.e. 1st line)
-		      // here is a *very small* period of time so scoped_lock can be loked by *this* thread
-		      // while other thread can wait for a long time
-			  // http://stackoverflow.com/questions/3992715/critical-section-problem-in-windows-7
+		// no work after lk is out of scope...
+		// because after 4th line we will go to next iteration of while(i.e. 1st line)
+		// here is a *very small* period of time so scoped_lock can be loked by *this* thread
+		// while other thread can wait for a long time
+		// http://stackoverflow.com/questions/3992715/critical-section-problem-in-windows-7
 		5   }
 		*/
 		typedef scoped_lock_base<true> scoped_yield_lock;

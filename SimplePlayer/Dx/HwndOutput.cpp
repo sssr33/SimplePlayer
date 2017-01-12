@@ -55,6 +55,14 @@ DirectX::XMFLOAT4X4 HwndOutput::GetD3DOrientationTransform() const {
 	return this->d3dOrientationTransform;
 }
 
+OrientationTypes HwndOutput::GetOrientation() const {
+	return OrientationTypes::None;
+}
+
+OrientationTypes HwndOutput::GetNativeOrientation() const {
+	return OrientationTypes::None;
+}
+
 void HwndOutput::SetLogicalSize(const DirectX::XMFLOAT2 &v) {
 	this->logicalSize = v;
 }
@@ -66,11 +74,11 @@ void HwndOutput::Resize() {
 void HwndOutput::BeginRender() {
 	auto rtView = this->GetD3DRtView();
 	ID3D11RenderTargetView *const targets[1] = { this->GetD3DRtView() };
-	auto ctx = this->dxDev->GetContext();
+	//auto ctx = this->dxDev->GetContext();
+	auto dxLk = this->dxDev->LockCtxScoped();
 
-	ctx->D3D()->OMSetRenderTargets(1, targets, nullptr);
-
-	ctx->D3D()->ClearRenderTargetView(this->GetD3DRtView(), DirectX::Colors::Transparent);
+	this->dxDev->D3D()->OMSetRenderTargets(1, targets, nullptr);
+	this->dxDev->D3D()->ClearRenderTargetView(this->GetD3DRtView(), DirectX::Colors::Transparent);
 }
 
 void HwndOutput::EndRender() {
@@ -80,12 +88,13 @@ void HwndOutput::EndRender() {
 	HRESULT hr = this->swapChain->Present(1, 0);
 
 	{
-		auto ctx = this->dxDev->GetContext();
+		//auto ctx = this->dxDev->GetContext();
+		auto dxLk = this->dxDev->LockCtxScoped();
 
 		// Discard the contents of the render target.
 		// This is a valid operation only when the existing contents will be entirely
 		// overwritten. If dirty or scroll rects are used, this call should be modified.
-		ctx->D3D()->DiscardView1(this->d3dRenderTargetView.Get(), nullptr, 0);
+		this->dxDev->D3D()->DiscardView1(this->d3dRenderTargetView.Get(), nullptr, 0);
 	}
 
 	//// If the device was removed either by a disconnection or a driver upgrade, we 
@@ -130,11 +139,12 @@ void HwndOutput::CleanContextState() {
 	this->d2dTargetBitmap = nullptr;
 
 	{
-		auto ctx = this->dxDev->GetContext();
+		//auto ctx = this->dxDev->GetContext();
+		auto dxLk = this->dxDev->LockCtxScoped();
 
-		ctx->D2D()->SetTarget(nullptr);
-		ctx->D3D()->OMSetRenderTargets(ARRAYSIZE(nullViews), nullViews, nullptr);
-		ctx->D3D()->Flush();
+		this->dxDev->D2D()->SetTarget(nullptr);
+		this->dxDev->D3D()->OMSetRenderTargets(ARRAYSIZE(nullViews), nullViews, nullptr);
+		this->dxDev->D3D()->Flush();
 	}
 }
 
@@ -218,13 +228,14 @@ void HwndOutput::CreateTargetViews() {
 
 	{
 		auto viewport = this->GetD3DViewport();
-		auto ctx = this->dxDev->GetContext();
+		//auto ctx = this->dxDev->GetContext();
+		auto dxLk = this->dxDev->LockCtxScoped();
 
-		ctx->D3D()->RSSetViewports(1, &viewport);
+		this->dxDev->D3D()->RSSetViewports(1, &viewport);
 
-		ctx->D2D()->SetTarget(this->d2dTargetBitmap.Get());
-		ctx->D2D()->SetDpi(this->logicalDpi, this->logicalDpi);
-		ctx->D2D()->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE);
+		this->dxDev->D2D()->SetTarget(this->d2dTargetBitmap.Get());
+		this->dxDev->D2D()->SetDpi(this->logicalDpi, this->logicalDpi);
+		this->dxDev->D2D()->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE);
 	}
 }
 

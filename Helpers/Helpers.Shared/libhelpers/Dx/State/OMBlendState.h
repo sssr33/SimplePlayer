@@ -1,5 +1,5 @@
 #pragma once
-#include "..\..\DxDevice.h"
+#include "..\DxDevice.h"
 #include "libhelpers\Macros.h"
 
 class OMBlendState {

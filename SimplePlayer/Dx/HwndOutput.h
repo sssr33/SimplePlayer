@@ -18,6 +18,8 @@ public:
 	ID2D1Bitmap1 *GetD2DRtView() const override;
 	D2D1_MATRIX_3X2_F GetD2DOrientationTransform() const override;
 	DirectX::XMFLOAT4X4 GetD3DOrientationTransform() const override;
+	OrientationTypes GetOrientation() const override;
+	OrientationTypes GetNativeOrientation() const override;
 
 	void SetLogicalSize(const DirectX::XMFLOAT2 &v);
 

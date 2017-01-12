@@ -17,7 +17,7 @@ public:
 	Microsoft::WRL::ComPtr<ID2D1Factory1> GetD2DFactoryCPtr() const;
 	Microsoft::WRL::ComPtr<ID3D11Device> GetD3DDeviceCPtr() const;
 	Microsoft::WRL::ComPtr<ID2D1Device> GetD2DDeviceCPtr() const;
-	D2DCtxMt *GetD2DCtxMt();
+	D2DCtxMt *GetD2DCtxMt() const;
 
 protected:
 	Microsoft::WRL::ComPtr<IDWriteFactory> dwriteFactory;

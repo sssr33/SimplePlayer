@@ -1,6 +1,6 @@
 #pragma once
-#include "OMBlendState.h"
 #include "libhelpers\Thread\LockStack.h"
+#include "..\OMBlendState.h"
 
 struct BlendState {
 	Microsoft::WRL::ComPtr<ID3D11BlendState> state;
