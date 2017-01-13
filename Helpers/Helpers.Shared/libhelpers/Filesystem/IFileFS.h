@@ -15,8 +15,11 @@ namespace Filesystem {
 		virtual uint64_t GetSize() const = 0;
 		virtual std::wstring GetPath() const = 0;
 
-		virtual IStream *OpenStream(FileAccessMode accessMode) = 0;
-
 		virtual void Delete(FileDeleteMode mode) = 0;
+
+		var_ptr<IStream> OpenStream(FileAccessMode accessMode, var_ptr_type ptrType = var_ptr_type::unique);
+
+	protected:
+		virtual var_ptr<IStream> OpenStreamI(FileAccessMode accessMode, var_ptr_type ptrType) = 0;
 	};
 }

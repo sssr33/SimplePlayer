@@ -1,14 +1,14 @@
 #pragma once
-
-#include <mfobjects.h>
-#include <ObjIdl.h>
-#include <wrl.h>
+#include "IWinStreamSimpleExt.h"
 
 namespace Filesystem {
-	class IWinStreamExt {
+	class IWinStreamExt : public IWinStreamSimpleExt {
 	public:
 		IWinStreamExt();
 		virtual ~IWinStreamExt();
+
+		IMFByteStream *CreateIMFByteStreamSimple() override;
+		::IStream *CreateIStreamSimple() override;
 
 		virtual Microsoft::WRL::ComPtr<IMFByteStream> CreateIMFByteStream() = 0;
 		virtual Microsoft::WRL::ComPtr<::IStream> CreateIStream() = 0;
