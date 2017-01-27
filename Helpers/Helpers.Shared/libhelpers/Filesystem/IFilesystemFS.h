@@ -7,9 +7,15 @@ namespace Filesystem {
 		IFilesystem();
 		virtual ~IFilesystem();
 
-		virtual IFolder *GetInstalledFolder() = 0;
-		virtual IFolder *GetLocalFolder() = 0;
-		virtual IFile *GetFile(const std::wstring &path) = 0;
-		virtual IFolder *GetFolder(const std::wstring &path) = 0;
+		var_ptr<IFolder> GetInstalledFolder(var_ptr_type ptrType = var_ptr_type::unique);
+		var_ptr<IFolder> GetLocalFolder(var_ptr_type ptrType = var_ptr_type::unique);
+		var_ptr<IFile> GetFile(const std::wstring &path, var_ptr_type ptrType = var_ptr_type::unique);
+		var_ptr<IFolder> GetFolder(const std::wstring &path, var_ptr_type ptrType = var_ptr_type::unique);
+
+	protected:
+		virtual var_ptr<IFolder> GetInstalledFolderI(var_ptr_type ptrType) = 0;
+		virtual var_ptr<IFolder> GetLocalFolderI(var_ptr_type ptrType) = 0;
+		virtual var_ptr<IFile> GetFileI(const std::wstring &path, var_ptr_type ptrType) = 0;
+		virtual var_ptr<IFolder> GetFolderI(const std::wstring &path, var_ptr_type ptrType) = 0;
 	};
 }

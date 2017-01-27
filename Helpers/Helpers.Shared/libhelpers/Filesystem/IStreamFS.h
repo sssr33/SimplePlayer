@@ -1,6 +1,6 @@
 #pragma once
 #include "SeekOriginFS.h"
-#include "..\PointerWrappers.h"
+#include "..\var_ptr.h"
 
 #include <cstdint>
 #include <memory>
@@ -21,6 +21,9 @@ namespace Filesystem {
 		virtual uint32_t Write(const void *buf, uint32_t length) = 0;
 		virtual void Seek(SeekOrigin origin, int64_t offset) = 0;
 
-		virtual IStream *Clone() = 0;
+		var_ptr<IStream> Clone(var_ptr_type ptrType = var_ptr_type::unique);
+
+	protected:
+		virtual var_ptr<IStream> CloneI(var_ptr_type ptrType) = 0;
 	};
 }

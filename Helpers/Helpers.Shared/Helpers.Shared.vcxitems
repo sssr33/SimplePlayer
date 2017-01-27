@@ -53,6 +53,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Filesystem\IFolderFS.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Filesystem\IStreamFS.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Filesystem\IWinStreamExt.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Filesystem\IWinStreamSimpleExt.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Filesystem\SeekOriginFS.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\AABB.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\AlignedAllocator.h" />
@@ -134,6 +135,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\TypeConverter.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\UniqueHandle.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\unique_ptr_extensions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\var_ptr.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\DebugScopedWatch.cpp" />
@@ -148,7 +150,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Dx\State\OMBlendState.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Dx\State\RSState.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Dx\XMVectorBox.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Filesystem\CtorDtorImplFS.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\AABB.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Dx\D2DCtxMt.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Dx\D3dStructWrappers.cpp" />
@@ -159,6 +160,12 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Dx\Renderer\IOutput.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Dx\Renderer\IRenderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Dx\Renderer\SwapChainPanelOutput.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Filesystem\IFileFS.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Filesystem\IFilesystemFS.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Filesystem\IFolderFS.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Filesystem\IStreamFS.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Filesystem\IWinStreamExt.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Filesystem\IWinStreamSimpleExt.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Hashers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\HColor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\HData.cpp" />

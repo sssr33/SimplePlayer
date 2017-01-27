@@ -114,6 +114,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Dx\State\PSShaderResourceState.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\HColor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\MatrixMultiStack.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\var_ptr.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libhelpers\Filesystem\IWinStreamSimpleExt.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Dx\D2DCtxMt.cpp" />
@@ -156,7 +158,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Thread\LockStack\ThreadLockStackLS.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Dx\State\BlendState\BlendStateCache.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\DebugScopedWatch.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Filesystem\CtorDtorImplFS.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\HResultException.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\UniqueHandle.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\jsonNative\dist\jsoncpp.cpp" />
@@ -171,6 +172,12 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Dx\Renderer\Texture9On11Output.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Dx\State\OMBlendState.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\HColor.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Filesystem\IFileFS.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Filesystem\IFilesystemFS.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Filesystem\IFolderFS.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Filesystem\IStreamFS.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Filesystem\IWinStreamExt.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\Filesystem\IWinStreamSimpleExt.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libhelpers\MatrixMultiStack.cpp" />
   </ItemGroup>
 </Project>
