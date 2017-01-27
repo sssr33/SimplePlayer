@@ -1,21 +1,22 @@
 #include "PlayerRenderer.h"
 
+#include <vector>
+#include <DirectXMath.h>
+#include <libhelpers\HMath.h>
+
 PlayerRenderer::PlayerRenderer(raw_ptr<DxDevice> dxDev, raw_ptr<IOutput> output)
-	: IRenderer(dxDev, output), inCircle(false),
+	: IRenderer(dxDev, output), renderCtx(this->dxDev.get()), inCircle(false),
 	projection2D(D2D1::Matrix3x2F()), projection2DInv(D2D1::Matrix3x2F()),
 	projection2DLB(D2D1::Matrix3x2F()), projection2DLBInv(D2D1::Matrix3x2F()),
 	projection2DLT(D2D1::Matrix3x2F()), projection2DLTInv(D2D1::Matrix3x2F()),
 	projection2DRB(D2D1::Matrix3x2F()), projection2DRBInv(D2D1::Matrix3x2F()),
-	projection2DRT(D2D1::Matrix3x2F()), projection2DRTInv(D2D1::Matrix3x2F())
+	projection2DRT(D2D1::Matrix3x2F()), projection2DRTInv(D2D1::Matrix3x2F()),
+	console(this->dxDev.get())
 {
 }
 
 PlayerRenderer::~PlayerRenderer() {
 }
-
-#include <vector>
-#include <DirectXMath.h>
-#include <libhelpers/HMath.h>
 
 void PlayerRenderer::Render() {
 	auto d2dFactory = this->dxDev->GetD2DFactory();
@@ -43,6 +44,10 @@ void PlayerRenderer::Render() {
 	d2dCtx->FillEllipse(D2D1::Ellipse(ellipseCenter, ellipseRadius, ellipseRadius), brush.Get());
 
 	d2dCtx->DrawLine(pt0, pt1, brush2.Get());
+
+	auto projMatrixScope = this->renderCtx.GetMatrixStack()->PushScoped(RenderContext::Matrix::Projection, this->projection2D);
+
+	this->console.Render(this->renderCtx);
 
 	this->DrawMovingLine(brush2.Get());
 

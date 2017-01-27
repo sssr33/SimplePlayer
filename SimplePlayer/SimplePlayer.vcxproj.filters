@@ -12,6 +12,8 @@
     <ClInclude Include="Dx\HwndRenderer.h" />
     <ClInclude Include="Player\PlayerRenderer.h" />
     <ClInclude Include="Player\Console\Console.h" />
+    <ClInclude Include="Player\RenderContext.h" />
+    <ClInclude Include="Player\UI\UIControl.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -23,5 +25,7 @@
     <ClCompile Include="Dx\HwndOutput.cpp" />
     <ClCompile Include="Player\PlayerRenderer.cpp" />
     <ClCompile Include="Player\Console\Console.cpp" />
+    <ClCompile Include="Player\RenderContext.cpp" />
+    <ClCompile Include="Player\UI\UIControl.cpp" />
   </ItemGroup>
 </Project>

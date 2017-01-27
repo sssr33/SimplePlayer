@@ -1,4 +1,6 @@
 #pragma once
+#include "Console\Console.h"
+#include "RenderContext.h"
 
 #include <libhelpers\Thread\critical_section.h>
 #include <libhelpers\Dx\Renderer\IRenderer.h>
@@ -18,6 +20,8 @@ public:
 
 private:
 	thread::critical_section cs;
+	RenderContext renderCtx;
+
 	bool inCircle;
 	D2D1::Matrix3x2F projection2D, projection2DInv;
 	D2D1::Matrix3x2F projection2DLB, projection2DLBInv;
@@ -29,6 +33,8 @@ private:
 
 	std::list<D2D1_POINT_2F> qbezsBuf;
 	std::list<D2D1_BEZIER_SEGMENT> qbezs;
+
+	Console console;
 
 	void DrawMovingLine(ID2D1SolidColorBrush *brush);
 };

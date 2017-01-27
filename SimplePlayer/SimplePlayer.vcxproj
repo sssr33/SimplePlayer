@@ -159,6 +159,8 @@
     <ClInclude Include="Player\Console\Console.h" />
     <ClInclude Include="Player\PlayerRenderer.h" />
     <ClInclude Include="Player\PlayerWindow.h" />
+    <ClInclude Include="Player\RenderContext.h" />
+    <ClInclude Include="Player\UI\UIControl.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Window\Window.h" />
@@ -171,6 +173,8 @@
     <ClCompile Include="Player\Console\Console.cpp" />
     <ClCompile Include="Player\PlayerRenderer.cpp" />
     <ClCompile Include="Player\PlayerWindow.cpp" />
+    <ClCompile Include="Player\RenderContext.cpp" />
+    <ClCompile Include="Player\UI\UIControl.cpp" />
     <ClCompile Include="SimplePlayer.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="Window\Window.cpp" />
