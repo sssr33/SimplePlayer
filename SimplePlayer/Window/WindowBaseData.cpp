@@ -1,6 +1,6 @@
 #include "WindowBaseData.h"
 
-WindowBaseData::WindowBaseData() 
-	: handle(NULL)
+WindowBaseData::WindowBaseData()
+    : handle(NULL)
 {
 }

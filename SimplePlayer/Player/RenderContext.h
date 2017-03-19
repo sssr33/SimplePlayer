@@ -6,25 +6,25 @@
 
 class RenderContext {
 public:
-	enum class Matrix {
-		Object,
-		Camera,
-		Projection,
-		Orientation,
+    enum class Matrix {
+        Object,
+        Camera,
+        Projection,
+        Orientation,
 
-		Count
-	};
+        Count
+    };
 
-	RenderContext(DxDevice *dxDev);
+    RenderContext(DxDevice *dxDev);
 
-	DxDevice *GetDxDev();
-	DxLayerStack *GetLayers();
-	MatrixMultiStack *GetMatrixStack();
+    DxDevice *GetDxDev();
+    DxLayerStack *GetLayers();
+    MatrixMultiStack *GetMatrixStack();
 
 private:
-	DxDevice *dxDev;
-	DxLayerStackResources layerRes;
-	DxLayerStack layers;
+    DxDevice *dxDev;
+    DxLayerStackResources layerRes;
+    DxLayerStack layers;
 
-	MatrixMultiStack matrices;
+    MatrixMultiStack matrices;
 };

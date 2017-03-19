@@ -6,14 +6,12 @@
 #include "Window\WindowContainer.h"
 
 int main() {
-	HWND hWnd = GetConsoleWindow();
-	ShowWindow(hWnd, SW_HIDE);
+    HWND hWnd = GetConsoleWindow();
+    ShowWindow(hWnd, SW_HIDE);
 
-	WindowContainer<PlayerWindow> playerWnd(L"Player");
+    WindowContainer<PlayerWindow> playerWnd(L"Player");
 
-	// tmp logic
-	Sleep(INFINITE);
+    playerWnd.WaitForClose();
 
-	return 0;
+    return 0;
 }
-

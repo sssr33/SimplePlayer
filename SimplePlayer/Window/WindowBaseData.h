@@ -6,9 +6,9 @@
 
 class WindowBaseData {
 public:
-	HWND handle;
-	std::wstring className;
-	std::thread wndThread;
+    HWND handle;
+    std::wstring className;
+    std::thread wndThread;
 
-	WindowBaseData();
+    WindowBaseData();
 };

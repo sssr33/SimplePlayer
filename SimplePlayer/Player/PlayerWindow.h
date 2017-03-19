@@ -8,17 +8,17 @@
 
 class PlayerWindow : public Window {
 public:
-	PlayerWindow(WindowBaseData &baseData);
-	virtual ~PlayerWindow();
+    PlayerWindow(WindowBaseData &baseData);
+    virtual ~PlayerWindow();
 
-	ProcessMsgResult ProcessMsg(uint32_t msg, WPARAM wparam, LPARAM lparam) override;
+    ProcessMsgResult ProcessMsg(uint32_t msg, WPARAM wparam, LPARAM lparam) override;
 
 private:
-	std::unique_ptr<HwndRenderer<PlayerRenderer>> renderer;
-	TaskQueueWorker inputWorker;
+    std::unique_ptr<HwndRenderer<PlayerRenderer>> renderer;
+    TaskQueueWorker inputWorker;
 
-	DirectX::XMFLOAT2 GetXMFLOAT2FromLParam(LPARAM lparam);
-	DirectX::XMFLOAT2 GetPointFromLParam(LPARAM lparam);
+    DirectX::XMFLOAT2 GetXMFLOAT2FromLParam(LPARAM lparam);
+    DirectX::XMFLOAT2 GetPointFromLParam(LPARAM lparam);
 
-	ProcessMsgResult ProcessInput(uint32_t msg, WPARAM wparam, LPARAM lparam);
+    ProcessMsgResult ProcessInput(uint32_t msg, WPARAM wparam, LPARAM lparam);
 };

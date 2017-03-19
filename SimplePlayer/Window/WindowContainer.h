@@ -4,21 +4,25 @@
 template<class T>
 class WindowContainer {
 public:
-	WindowContainer(const std::wstring &windowTitle)
-		: window(baseData), winMain(baseData, window, windowTitle)
-	{
-	}
+    WindowContainer(const std::wstring &windowTitle)
+        : window(baseData), winMain(baseData, window, windowTitle)
+    {
+    }
 
-	T *operator->() {
-		return &this->window;
-	}
+    T *operator->() {
+        return &this->window;
+    }
 
-	const T *operator->() const {
-		return &this->window;
-	}
+    const T *operator->() const {
+        return &this->window;
+    }
+
+    void WaitForClose() {
+        this->winMain.WaitForClose();
+    }
 
 private:
-	WindowBaseData baseData;
-	T window;
-	WindowMain winMain;
+    WindowBaseData baseData;
+    T window;
+    WindowMain winMain;
 };

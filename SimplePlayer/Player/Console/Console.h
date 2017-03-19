@@ -3,11 +3,11 @@
 
 class Console {
 public:
-	Console(DxDevice *dxDev);
-	~Console();
+    Console(DxDevice *dxDev);
+    ~Console();
 
-	void Render(RenderContext &renderCtx);
+    void Render(RenderContext &renderCtx);
 
 private:
-	DxDevice *dxDev;
+    DxDevice *dxDev;
 };
