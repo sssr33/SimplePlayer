@@ -6,16 +6,22 @@ namespace UI {
         Control();
         virtual ~Control();
 
-        virtual float X() = 0;
-        virtual void X(float v) = 0;
+        virtual float GetX() = 0;
+        virtual void SetX(float v) = 0;
 
-        virtual float Y() = 0;
-        virtual void Y(float v) = 0;
+        virtual float GetY() = 0;
+        virtual void SetY(float v) = 0;
 
-        virtual float SizeX() = 0;
-        virtual void SizeX(float v) = 0;
+        virtual float GetWidth() = 0;
+        virtual void SetWidth(float v) = 0;
 
-        virtual float SizeY() = 0;
-        virtual void SizeY(float v) = 0;
+        virtual float GetHeight() = 0;
+        virtual void SetHeight(float v) = 0;
+
+        virtual Control *GetParent() = 0;
+
+    protected:
+        void SetParentTo(Control *v);
+        virtual void SetParent(Control *v) = 0;
     };
 }

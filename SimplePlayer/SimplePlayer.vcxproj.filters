@@ -14,6 +14,8 @@
     <ClInclude Include="Player\Console\Console.h" />
     <ClInclude Include="Player\RenderContext.h" />
     <ClInclude Include="Player\UI\UIControl.h" />
+    <ClInclude Include="Player\UI\UIControlSimple.h" />
+    <ClInclude Include="Player\UI\UIPanel.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -27,5 +29,7 @@
     <ClCompile Include="Player\Console\Console.cpp" />
     <ClCompile Include="Player\RenderContext.cpp" />
     <ClCompile Include="Player\UI\UIControl.cpp" />
+    <ClCompile Include="Player\UI\UIControlSimple.cpp" />
+    <ClCompile Include="Player\UI\UIPanel.cpp" />
   </ItemGroup>
 </Project>
